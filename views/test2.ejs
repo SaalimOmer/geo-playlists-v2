@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>Hello, world!</title>
+
+  <style>
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 1100px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
+
+    .nav-item.dropdown {
+      background-color: #222831;
+
+    }
+
+    .nav-item.dropdown:hover {
+      background-color: #393e46;
+    }
+
+    .extra-padding.h2 {
+      padding-left: 50%;
+    }
+
+    .extra-padding.nav-item {
+      padding-left: 20%;
+      font-size: 30px;
+    }
+
+
+    a {
+      color: white;
+    }
+
+    a:hover {
+      color: white;
+    }
+
+    .sidebar {
+      background-color: #393e46;
+    }
+
+    .list-heading {
+      color: white;
+    }
+
+    .home-btn{
+      background-color: #393e46;
+      border: none;
+    }
+
+
+    .container-padding-top {
+      padding-top: 40px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<%- include('partials/home-button'); -%>
+
+<input class="form-control form-control-dark w-100" type="text" placeholder="Search Location" aria-label="Search">
+<ul class="navbar-nav px-3">
+  <li class="nav-item text-nowrap">
+    <a class="nav-link" href="#">Sign out</a>
+  </li>
+</ul>
+</nav>
+
+  <div class="container-fluid container-padding-top">
+
+    <div class="row">
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item nav-justified extra-padding list-heading">
+              My Playlists
+            </li>
+            <ul class="nav nav-pills nav-justified">
+              <%  playlists.forEach(function(playlist){ %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
+                  <%=playlist%>
+                </a>
+                <div class="dropdown-menu">
+
+                  <%  songs.forEach(function(song){ %>
+
+                  <a class="dropdown-item" href="#">
+                    <%=song%>
+                  </a>
+
+                  <% }) %>
+              </li>
+              <% }) %>
+
+            </ul>
+          </ul>
+
+        </div>
+      </nav>
+
+
+      <div id="map" class="col-8"></div>
+
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item nav-justified extra-padding list-heading">
+              Global Playlists
+            </li>
+            <ul class="nav nav-pills nav-justified">
+              <%  playlists.forEach(function(playlist){ %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
+                  <%=playlist%>
+                </a>
+                <div class="dropdown-menu">
+
+                  <%  songs.forEach(function(song){ %>
+
+                  <a class="dropdown-item" href="#">
+                    <%=song%>
+                  </a>
+
+                  <% }) %>
+              </li>
+              <% }) %>
+
+            </ul>
+          </ul>
+
+        </div>
+      </nav>
+    </div>
+
+  </div>
+
+
+  <script>
+    function randomLongLat() {
+      var randomLat = Math.random() * 90;
+      randomLat = (Math.random() < 0.5) ? -1 * randomLat : randomLat;
+      var randomLong = Math.random() * 180;
+      randomLong = (Math.random() < 0.5) ? -1 * randomLong : randomLong;
+
+      return {
+        lat: randomLat,
+        lng: randomLong,
+      };
+    }
+
+
+
+
+
+
+
+
+
+    let arr = [];
+    let playlistNames = [];
+    let playlistSongs = [];
+
+
+
+
+
+
+    <% for (let i = 0; i < playlistLocations.length; i++) { %>
+    arr.push({
+      lat: <%=playlistLocations[i].latitude%>,
+      lng: <%=playlistLocations[i].longitude%>
+    });
+
+
+    playlistNames.push({
+      playlist: "<%=playlistLocations[i].playlistName%>",
+    });
+
+        <% for (let j = 0; j < playlistLocations[i].song.length; j++) { %>
+
+
+        playlistSongs.push({
+
+          songs: "<%=playlistLocations[i].song[j]%>",
+
+        });
+
+
+
+
+          <% }; %>
+
+    <% }; %>
+
+
+
+    let contentString = "coolio";
+
+
+
+
+
+
+    var map;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: arr[0],
+        zoom: 3
+      });
+      var markerArray = [];
+
+
+      for (var i = 0; i < <%=playlistLocations.length%>; i++) {
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          position: arr[i]
+        });
+        var marker = new google.maps.Marker({
+          position: arr[i],
+          map: map,
+          title: 'Hello World!'
+        });
+
+
+        marker.addListener('click', function() {
+          infowindow.open(map);
+        });
+        markerArray.push(marker);
+
+
+      }
+
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCD2idVHFLuuSAFPZhUDqj_1svXrqmIm8&callback=initMap">
+  </script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

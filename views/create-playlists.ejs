@@ -9,86 +9,84 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Geo-Playlists</title>
+  <title>Hello, world!</title>
+
   <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      .nav-item.dropdown{
-        background-color:#222831;
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 1100px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
 
-      }
+    .nav-item.dropdown {
+      background-color: #222831;
 
-      .nav-item.dropdown:hover{
-        background-color: #393e46;
-      }
+    }
 
-      .extra-padding.h2{
-        padding-left:50%;
-      }
+    .nav-item.dropdown:hover {
+      background-color: #393e46;
+    }
 
-      .extra-padding.nav-item{
-        padding-left:20%;
-        font-size:30px;
-      }
+    .extra-padding.h2 {
+      padding-left: 50%;
+    }
 
-      a{
-        color:white;
-      }
-      a:hover{
-        color:white;
-      }
-
-      .sidebar{
-        background-color:#393e46;
-      }
-      .list-heading{
-        color:white;
-      }
+    .extra-padding.nav-item {
+      padding-left: 20%;
+      font-size: 30px;
+    }
 
 
-      .container-padding-top{
-        padding-top:40px;
+    a {
+      color: white;
+    }
 
-      }
-      canvas{
-        margin-bottom:25%;
-        margin-top:5%
-      }
+    a:hover {
+      color: white;
+    }
+
+    .sidebar {
+      background-color: #393e46;
+    }
+
+    .list-heading {
+      color: white;
+    }
+
+    .home-btn {
+      background-color: #393e46;
+      border: none;
+    }
+    .table{
+      font-size: 1.5rem;
+    }
 
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+    .container-padding-top {
+      padding-top: 40px;
 
-
-
-
+    }
+  </style>
 </head>
 
 <body>
-
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Geo-Playlists</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search Song" aria-label="Search">
-    <ul class="navbar-nav px-3">
-      <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#">Sign out</a>
-      </li>
-    </ul>
+    <a class="nav-link" href="/create-playlists">Geo-Playlists</a>
+
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+
+      <a class="nav-link" href="/browse-map">Browse Map</a>
+      <a class="nav-link" href="/set-location">Set Location</a>
+      <a class="nav-link" href="/">Sign out</a>
+    </div>
   </nav>
 
   <div class="container-fluid container-padding-top">
-    <div class="row row-padding-bot">
-      <nav class="col-1 d-none d-md-block bg-dark sidebar">
+
+    <div class="row">
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item nav-justified extra-padding list-heading">
@@ -107,8 +105,7 @@
                   <a class="dropdown-item" href="#">
                     <%=song%>
                   </a>
-                  <!-- <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>  -->
+
                   <% }) %>
               </li>
               <% }) %>
@@ -119,16 +116,25 @@
         </div>
       </nav>
 
-      <main role="main" class="col-10 px-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
-          <h1 class="h2 extra-padding">Recommended Songs</h1>
 
-        </div>
+      <div id="map" class="col-8">
 
-        <canvas class=" w-100" id="myChart" width="900" height="380"></canvas>
-      </main>
+        <table class="table">
+          <tbody>
+            <%  songs.forEach(function(song){ %>
+            <tr>
+              <td><a class="dropdown-item" href="#">
+                  <%=song%>
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
 
-      <nav class="col-1 d-none d-md-block bg-dark sidebar">
+      </div>
+
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item nav-justified extra-padding list-heading">
@@ -147,8 +153,7 @@
                   <a class="dropdown-item" href="#">
                     <%=song%>
                   </a>
-                  <!-- <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>  -->
+
                   <% }) %>
               </li>
               <% }) %>
@@ -159,7 +164,9 @@
         </div>
       </nav>
     </div>
+
   </div>
+
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

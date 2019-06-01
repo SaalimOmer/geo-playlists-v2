@@ -1,4 +1,4 @@
-<!doctype html>
+\<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,95 +9,96 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <title>Geo-Playlists</title>
+  <title>Hello, world!</title>
+
   <style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      .nav-item.dropdown{
-        background-color:#222831;
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 1100px;
+      /* The height is 400 pixels */
+      width: 100%;
+      /* The width is the width of the web page */
+    }
 
-      }
+    .nav-item.dropdown {
+      background-color: #222831;
 
-      .nav-item.dropdown:hover{
-        background-color: #393e46;
-      }
+    }
 
-      .extra-padding.h2{
-        padding-left:50%;
-      }
+    .nav-item.dropdown:hover {
+      background-color: #393e46;
+    }
 
-      .extra-padding.nav-item{
-        padding-left:20%;
-        font-size:30px;
-      }
-      canvas{
-        margin-bottom:25%;
-        margin-top:5%
-      }
+    .extra-padding.h2 {
+      padding-left: 50%;
+    }
 
-      a{
-        color:white;
-      }
-      a:hover{
-        color:white;
-      }
-
-      .sidebar{
-        background-color:#393e46;
-      }
-      .list-heading{
-        color:white;
-      }
+    .extra-padding.nav-item {
+      padding-left: 20%;
+      font-size: 30px;
+    }
 
 
-      .container-padding-top{
-        padding-top:40px;
+    a {
+      color: white;
+    }
 
-      }
-      .myMap{
-        padding-left: 0;
-          padding-right:0;
-      }
+    a:hover {
+      color: white;
+    }
+    /* .nav-link{
+      padding-left: 0;
+      padding-right:0;
+    } */
+
+    .sidebar {
+      background-color: #393e46;
+    }
+
+    .list-heading {
+      color: white;
+    }
+
+    .home-btn{
+      background-color: #393e46;
+      border: none;
+    }
 
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+    .container-padding-top {
+      padding-top: 16px;
 
-
-
-
+    }
+  </style>
 </head>
 
 <body>
-
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Geo-Playlists</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search Location" aria-label="Search">
+    <a class="nav-link" href="/create-playlists">Geo-Playlists</a>
+
+    <div class=" d-flex flex-column flex-md-row justify-content-between">
+      <a class="nav-link" href="/create-playlists">Create Playlists</a>
+      <a class="nav-link" href="/set-location">Set Location</a>
+
+    </div>
+
+    <input class="form-control form-control-dark w-50" type="text" placeholder="Search Location" aria-label="Search">
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="nav-link" href="#">Sign out</a>
+        <a class="nav-link" href="/">Sign out</a>
       </li>
     </ul>
   </nav>
 
   <div class="container-fluid container-padding-top">
-    <div class="row row-padding-bot">
-      <nav class="col-1 d-none d-md-block bg-dark sidebar">
+
+    <div class="row">
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item nav-justified extra-padding list-heading">
               My Playlists
-              </li>
+            </li>
             <ul class="nav nav-pills nav-justified">
               <%  playlists.forEach(function(playlist){ %>
               <li class="nav-item dropdown">
@@ -111,8 +112,7 @@
                   <a class="dropdown-item" href="#">
                     <%=song%>
                   </a>
-                  <!-- <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>  -->
+
                   <% }) %>
               </li>
               <% }) %>
@@ -123,23 +123,17 @@
         </div>
       </nav>
 
-      <main role="main" class="col-10 myMap">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
-          <h1 class="h2 extra-padding">Map</h1>
 
-        </div>
+      <div id="map" class="col-8">
 
-        <div   width="900" height="100%">
-          <img src="images\big-map.jpg" alt="didnt show">
-        </div>
-      </main>
+      </div>
 
-      <nav class="col-1 d-none d-md-block bg-dark sidebar">
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item nav-justified extra-padding list-heading">
               Global Playlists
-              </li>
+            </li>
             <ul class="nav nav-pills nav-justified">
               <%  playlists.forEach(function(playlist){ %>
               <li class="nav-item dropdown">
@@ -153,8 +147,7 @@
                   <a class="dropdown-item" href="#">
                     <%=song%>
                   </a>
-                  <!-- <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>  -->
+
                   <% }) %>
               </li>
               <% }) %>
@@ -165,8 +158,115 @@
         </div>
       </nav>
     </div>
+
   </div>
 
+
+  <script>
+    function randomLongLat() {
+      var randomLat = Math.random() * 90;
+      randomLat = (Math.random() < 0.5) ? -1 * randomLat : randomLat;
+      var randomLong = Math.random() * 180;
+      randomLong = (Math.random() < 0.5) ? -1 * randomLong : randomLong;
+
+      return {
+        lat: randomLat,
+        lng: randomLong,
+      };
+    }
+
+
+
+
+
+
+
+
+
+    let arr = [];
+    let playlistNames = [];
+    let playlistSongs = [];
+  let contentString = [];
+
+
+
+
+
+    <% for (let i = 0; i < playlistLocations.length; i++) { %>
+    arr.push({
+      lat: <%=playlistLocations[i].latitude%>,
+      lng: <%=playlistLocations[i].longitude%>
+    });
+
+
+    playlistNames.push({
+      playlist: "<%=playlistLocations[i].playlistName%>",
+    });
+
+    contentString.push(
+       "<%=playlistLocations[i].playlistName%>",
+    );
+
+        <% for (let j = 0; j < playlistLocations[i].song.length; j++) { %>
+
+
+        playlistSongs.push({
+
+          songs: "<%=playlistLocations[i].song[j]%>",
+
+        });
+
+
+
+
+          <% }; %>
+
+    <% }; %>
+
+
+
+
+
+
+
+
+
+
+    var map;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: arr[0],
+        zoom: 3
+      });
+      var markerArray = [];
+
+
+      for (var i = 0; i < <%=playlistLocations.length%>; i++) {
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString[i],
+          position: arr[i]
+        });
+        var marker = new google.maps.Marker({
+          position: arr[i],
+          map: map,
+          title: 'Hello World!'
+        });
+
+  infowindow.open(map);
+        // marker.addListener('click', function() {
+        //
+        // });
+        markerArray.push(marker);
+
+
+      }
+
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCD2idVHFLuuSAFPZhUDqj_1svXrqmIm8&callback=initMap">
+  </script>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
