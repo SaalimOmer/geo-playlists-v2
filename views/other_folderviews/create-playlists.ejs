@@ -18,7 +18,6 @@
       /* The height is 400 pixels */
       width: 100%;
       /* The width is the width of the web page */
-      font-size: 30px;
     }
 
     .nav-item.dropdown {
@@ -60,8 +59,7 @@
       background-color: #393e46;
       border: none;
     }
-
-    .table {
+    .table{
       font-size: 1.5rem;
     }
 
@@ -70,14 +68,10 @@
       padding-top: 40px;
 
     }
-    .ol.songs{
-      font-size: 300px;
-    }
   </style>
 </head>
 
 <body>
-
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="nav-link" href="/create-playlists">Geo-Playlists</a>
 
@@ -96,13 +90,24 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item nav-justified extra-padding list-heading">
-              Personal
+              My Playlists
             </li>
             <ul class="nav nav-pills nav-justified">
               <%  playlists.forEach(function(playlist){ %>
-              <button type="button" name="<%= playlist.name %>" class="btn btn-block btn-primary">
-                <%= playlist.name %></button>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
+                  <%=playlist%>
+                </a>
+                <div class="dropdown-menu">
 
+                  <%  songs.forEach(function(song){ %>
+
+                  <a class="dropdown-item" href="#">
+                    <%=song%>
+                  </a>
+
+                  <% }) %>
+              </li>
               <% }) %>
 
             </ul>
@@ -111,24 +116,56 @@
         </div>
       </nav>
 
-      <div id="map" class="col-10">
-        <!-- table of first playlists songs -->
-        <table id="data-table">
 
-          <ol>
+      <div id="map" class="col-8">
 
-          </ol>
-
-
-      </div>
-      </div>
-
+        <table class="table">
+          <tbody>
+            <%  songs.forEach(function(song){ %>
+            <tr>
+              <td><a class="dropdown-item" href="#">
+                  <%=song%>
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
         </table>
+
       </div>
+
+      <nav class="col-2 d-none d-md-block bg-dark sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item nav-justified extra-padding list-heading">
+              Global Playlists
+            </li>
+            <ul class="nav nav-pills nav-justified">
+              <%  playlists.forEach(function(playlist){ %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
+                  <%=playlist%>
+                </a>
+                <div class="dropdown-menu">
+
+                  <%  songs.forEach(function(song){ %>
+
+                  <a class="dropdown-item" href="#">
+                    <%=song%>
+                  </a>
+
+                  <% }) %>
+              </li>
+              <% }) %>
+
+            </ul>
+          </ul>
+
+        </div>
+      </nav>
     </div>
 
   </div>
-
 
 
   <!-- Optional JavaScript -->
@@ -136,33 +173,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script>
-    $(document).ready(function() {
-      let playlists = <%- JSON.stringify(playlists, null, 2) %>;
-
-      $('.btn-block').on('click', function(event) {
-        // update the centerCoordinates
-        const name = event.target.name;
-        const matchingPlaylist = playlists.find(playlist => playlist.name === name);
-               $("ol").empty();
-
-               matchingPlaylist.song.forEach(function(song){
-
-
-                  $("ol").append('<li>'+song+'</li>');
-
-               });
-
-
-
-
-
-
-      });
-    });
-  </script>
-
-
 </body>
 
 </html>

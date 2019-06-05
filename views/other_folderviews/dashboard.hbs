@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="row" style="width: 100%; height: 80%;">
+      <div class="col-2">
+        <ul id="playlists">
+          {{#each playlists}}
+            <li><a data-uri="{{uri}}" href="#">{{name}}</a></li>
+
+          {{/each}}
+        </ul>
+
+      </div>
+      <div class="col-8" style="height: 100%;">
+        <div id="map"></div>
+        <table style="padding: 10px; border: 1px solid;">
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>longitude</th>
+              <th>latitude</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each playlists}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{latitude}}</td>
+                <td>{{longitude}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+      </div>
+      <div class="col-2" id='right-panel'>
+         <pre>{{{playlists_string}}}</pre>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous"></script>
+    <script>
+      function randomLongLat(){
+        var randomLat = Math.random() * 90;
+        randomLat = (Math.random() < 0.5) ? -1 * randomLat : randomLat;
+        var randomLong = Math.random() * 180;
+        randomLong = (Math.random() < 0.5) ? -1 * randomLong : randomLong;
+
+        return {
+          lat: randomLat,
+          lng: randomLong,
+        };
+      }
+      {{!-- var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+        var markerArray = [];
+        for(var i = 0; i < 10; i++) {
+          var newMarker = new google.maps.Marker({
+            position: randomLongLat(),
+            map: map,
+            title: 'Hello World!'
+          });
+          markerArray.push(newMarker);
+        }
+
+      } --}}
+      $('#playlists').on('click', 'li a', function(event) {
+        event.preventDefault();
+        var playlistUri = event.target.getAttribute('data-uri');
+        var right_panel = $('#right-panel');
+        play({
+          spotify_uri: playlistUri,
+          playerInstance: player
+        })
+      });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCD2idVHFLuuSAFPZhUDqj_1svXrqmIm8&callback=initMap"
+    async defer></script>
+
+
+   <script src="https://sdk.scdn.co/spotify-player.js"></script>
+   <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const token = 'BQDVnNKdbY4uaBBr-1ACiP4UlvGiixFC2MnGpLN_VryhjmXajyUlcTG0DLoXbaKUsljBnU5IIrK_h2UGt4-jdLQa0cvaqJIqbuJJ70kBi1KNp9QQITXetjI6r3gwFZwGKORK8ECtJErT-yvL9-FGE45fEW6AoADOT07Sjg';
+      player = new Spotify.Player({
+        name: 'Web Playback SDK Quick Start Player',
+        getOAuthToken: cb => { cb(token); }
+      });
+      // Error handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+      // Playback status updates
+      player.addListener('player_state_changed', state => { console.log(state); });
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+      // Connect to the player!
+      player.connect();
+    };
+    const play = ({
+      spotify_uri,
+      playerInstance: {
+        _options: {
+          getOAuthToken,
+          id
+        }
+      }
+    }) => {
+      getOAuthToken(access_token => {
+        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ uris: [spotify_uri] }),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`
+          },
+        });
+      });
+    };
+     </script>
+  </body>
+</html>

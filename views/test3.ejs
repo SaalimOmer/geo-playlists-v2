@@ -1,4 +1,4 @@
-\<!doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -7,42 +7,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <title>Hello, world!</title>
 
   <style>
+    body {
+      background-color: #343a40;
+    }
     /* Set the size of the div element that contains the map */
     #map {
-      height: 1100px;
+      height: 800px;
       /* The height is 400 pixels */
       width: 100%;
       /* The width is the width of the web page */
     }
-
     .nav-item.dropdown {
       background-color: #222831;
-
     }
-
     .nav-item.dropdown:hover {
       background-color: #393e46;
     }
-
     .extra-padding.h2 {
       padding-left: 50%;
     }
-
     .extra-padding.nav-item {
       padding-left: 20%;
       font-size: 30px;
     }
-
-
     a {
       color: white;
     }
-
     a:hover {
       color: white;
     }
@@ -50,24 +46,18 @@
       padding-left: 0;
       padding-right:0;
     } */
-
     .sidebar {
       background-color: #393e46;
     }
-
     .list-heading {
       color: white;
     }
-
-    .home-btn{
+    .home-btn {
       background-color: #393e46;
       border: none;
     }
-
-
     .container-padding-top {
-      padding-top: 16px;
-
+      padding-top: 64px;
     }
   </style>
 </head>
@@ -102,18 +92,17 @@
             <ul class="nav nav-pills nav-justified">
               <%  playlists.forEach(function(playlist){ %>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
-                  <%=playlist%>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                  aria-expanded="false" aria-orientation="vertical">
+                  <%= playlist.name %>
                 </a>
                 <div class="dropdown-menu">
-
-                  <%  songs.forEach(function(song){ %>
-
-                  <a class="dropdown-item" href="#">
-                    <%=song%>
-                  </a>
-
+                  <%  playlist.songs && playlist.songs.forEach(function(song){ %>
+                    <a class="dropdown-item" href="#">
+                      <%=song%>
+                    </a>
                   <% }) %>
+                </div>
               </li>
               <% }) %>
 
@@ -124,7 +113,8 @@
       </nav>
 
 
-      <div id="map" class="col-8"></div>
+      <div id="map" class="col-8">
+      </div>
 
       <nav class="col-2 d-none d-md-block bg-dark sidebar">
         <div class="sidebar-sticky">
@@ -133,22 +123,21 @@
               Global Playlists
             </li>
             <ul class="nav nav-pills nav-justified">
-                <% for (let i = 0; i < myPlaylists.length; i++) { %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-orientation="vertical">
-                  <%=myPlaylistsArr[i].name%>
-                </a>
-                <div class="dropdown-menu">
-
-                  <% for (let j = 0; j < myPlaylists[i].song.length; i++) { %>
-
-                  <a class="dropdown-item" href="#">
-                    <%=myPlaylistsSongArr[i].song[j]%>
+              <%  playlists.forEach(function(playlist){ %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false" aria-orientation="vertical">
+                    <%=playlist.name%>
                   </a>
-
-                  <% }; %>
-              </li>
-              <% }; %>
+                  <div class="dropdown-menu">
+                    <% playlist.songs && playlist.songs.forEach(function(song){ %>
+                      <a class="dropdown-item" href="#">
+                        <%=song%>
+                      </a>
+                    <% }) %>
+                  </div>
+                </li>
+              <% }) %>
 
             </ul>
           </ul>
@@ -161,134 +150,60 @@
 
 
   <script>
-    function randomLongLat() {
-      var randomLat = Math.random() * 90;
-      randomLat = (Math.random() < 0.5) ? -1 * randomLat : randomLat;
-      var randomLong = Math.random() * 180;
-      randomLong = (Math.random() < 0.5) ? -1 * randomLong : randomLong;
-
-      return {
-        lat: randomLat,
-        lng: randomLong,
-      };
-    }
-
-
-
-
-
-
-
-
-
-    let arr = [];
-    let playlistNames = [];
-    let playlistSongs = [];
-  let contentString = [];
-  let myPlaylistsArr = [];
-  let myPlaylistsSongArr = [];
-
-
-
-
-
-    <% for (let i = 0; i < playlistLocations.length; i++) { %>
-    arr.push({
-      lat: <%=playlistLocations[i].latitude%>,
-      lng: <%=playlistLocations[i].longitude%>
-    });
-
-
-    playlistNames.push({
-      playlist: "<%=playlistLocations[i].playlistName%>",
-    });
-
-    contentString.push(
-       "<%=playlistLocations[i].playlistName%>",
-    );
-
-        <% for (let j = 0; j < playlistLocations[i].song.length; j++) { %>
-
-
-        playlistSongs.push({
-
-          songs: "<%=playlistLocations[i].song[j]%>",
-
-        });
-
-
-          <% }; %>
-
-    <% }; %>
-
-
-    <% for (let i = 0; i < myPlaylists.length; i++) { %>
-    myPlaylistsArr.push({
-      "<%=myPlaylists[i].name%>"
-    });
-
-
-
-        <% for (let j = 0; j < myPlaylists[i].song.length; j++) { %>
-
-          myPlaylistsSongArr.push({
-            "<%=myPlaylists[i].song[j]%>"
-          });
-
-
-          <% }; %>
-
-    <% }; %>
-
-
-
-
-
-
-
-
-
-
+    let playlists = <%- JSON.stringify(playlists, null, 2) %>;
     var map;
-
     function initMap() {
+      const centerCoordinates = {
+          lat: 37.7739,
+          lng: -122.4312,
+        }
       map = new google.maps.Map(document.getElementById('map'), {
-        center: arr[0],
-        zoom: 3
+        center: centerCoordinates,
+        zoom: 10
       });
-      var markerArray = [];
+      const filteredPlaylists = playlists.filter(playlist => {
+        const bothDefined = typeof playlist.longitude === 'string' && typeof playlist.latitude === 'string'
+        return bothDefined;
+      })
 
-
-      for (var i = 0; i < <%=playlistLocations.length%>; i++) {
-
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString[i],
-          position: arr[i]
-        });
+      filteredPlaylists.forEach(function (playlist, index) {
+        // make a marker
+        const coordinates = {
+          lat: parseFloat(playlist.latitude),
+          lng: parseFloat(playlist.longitude),
+        };
         var marker = new google.maps.Marker({
-          position: arr[i],
+          position: coordinates,
           map: map,
           title: 'Hello World!'
         });
-
-  infowindow.open(map);
-        // marker.addListener('click', function() {
-        //
-        // });
-        markerArray.push(marker);
-
-
-      }
-
+        // make an infowindow
+        var infowindow = new google.maps.InfoWindow({
+          content: playlist.name,
+          position: coordinates
+        });
+        // register click event
+        marker.addListener('click', function () {
+          infowindow.open(map, marker);
+        });
+      })
     }
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCD2idVHFLuuSAFPZhUDqj_1svXrqmIm8&callback=initMap">
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsgdm03NOhsR-t7zGnXOdZ6ZaTtYgQBI&callback=initMap">
+
   </script>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
 </body>
 
 </html>
